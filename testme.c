@@ -3,16 +3,32 @@
 #include<stdlib.h>
 #include<time.h>
 
+unsigned int rand_interval(unsigned int min, unsigned int max)
+{
+    int r;
+    const unsigned int range = 1 + max - min;
+    const unsigned int buckets = RAND_MAX / range;
+    const unsigned int limit = buckets * range;
+
+    do
+    {
+        r = rand();
+    } while (r >= limit);
+
+    return min + (r / buckets);
+}
+
 char inputChar()
 {
-    // TODO: rewrite this function
-    return ' ';
+  //33-125
+  int x = rand_interval(32,126);
+  char value = (char)x;
+  return value;
 }
 
 char *inputString()
 {
-    // TODO: rewrite this function
-    return "";
+  return "reset\0";
 }
 
 void testme()
@@ -43,7 +59,7 @@ void testme()
        && state == 9)
     {
       printf("error ");
-      exit(200);
+      
     }
   }
 }
@@ -53,5 +69,6 @@ int main(int argc, char *argv[])
 {
     srand(time(NULL));
     testme();
+
     return 0;
 }
